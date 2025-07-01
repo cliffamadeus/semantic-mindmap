@@ -1,14 +1,11 @@
 [
   {
-    "abstract": "Smart irrigation using bamboo-based infrastructure",
-    "keywords": ["IoT", "moisture sensor", "climate-resilient", "bamboo", "automation"]
+    "abstract": "Smart irrigation using bamboo infrastructure enhances sustainable farming in climate-vulnerable areas."
   },
   {
-    "abstract": "AI-driven sustainability monitoring for urban forestry",
-    "keywords": ["AI", "environment", "machine learning", "green infrastructure", "satellite imagery"]
+    "abstract": "AI technologies offer promising solutions in sustainability monitoring, using satellite imagery and machine learning."
   },
   {
-    "abstract": "Citizen science in biodiversity mapping apps",
-    "keywords": ["crowdsourcing", "geotagging", "mobile app", "species database", "community involvement"]
+    "abstract": "Mobile applications empower citizens to contribute to biodiversity mapping with geotagging and crowdsourced data."
   }
 ]
