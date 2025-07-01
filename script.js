@@ -142,17 +142,35 @@ function drawMindMap(nodes, links) {
 
 // Show modal with Bootstrap
 function showModal(abstract, keywords) {
-  document.getElementById("modal-abstract").textContent = abstract;
+  // Remove any existing modal
+  const oldModal = document.getElementById('abstractModal');
+  if (oldModal) oldModal.remove();
 
-  const keywordList = document.getElementById("modal-keywords");
-  keywordList.innerHTML = '';
-  keywords.forEach(k => {
-    const li = document.createElement("li");
-    li.className = "list-group-item";
-    li.textContent = k;
-    keywordList.appendChild(li);
-  });
+  // Create modal container and innerHTML
+  const modalContainer = document.createElement("div");
+  modalContainer.innerHTML = `
+    <div class="modal fade" id="abstractModal" tabindex="-1" aria-labelledby="abstractModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="abstractModalLabel">Abstract Details</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <h6>Abstract</h6>
+            <p>${abstract}</p>
+            <h6>Keywords</h6>
+            <ul class="list-group list-group-flush">
+              ${keywords.map(k => `<li class="list-group-item">${k}</li>`).join('')}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
 
+  // Append to body and show modal
+  document.body.appendChild(modalContainer);
   const modal = new bootstrap.Modal(document.getElementById('abstractModal'));
   modal.show();
 }
