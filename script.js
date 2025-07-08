@@ -58,6 +58,19 @@ function drawMindMap(nodes, links) {
     .attr('width', width)
     .attr('height', height);
 
+  // Create a container for zoom & pan
+  const container = svg.append("g");
+
+  // Add zoom behavior
+  const zoom = d3.zoom()
+    .scaleExtent([0.3, 3]) // Set min and max zoom scale
+    .on("zoom", (event) => {
+      container.attr("transform", event.transform);
+    });
+
+  svg.call(zoom); // Enable zoom & pan on the SVG
+
+  // Tooltip
   const tooltip = d3.select("body").append("div").attr("class", "tooltip");
 
   const simulation = d3.forceSimulation(nodes)
@@ -68,7 +81,7 @@ function drawMindMap(nodes, links) {
     .force("y", d3.forceY(height / 2).strength(0.05))
     .force("collide", d3.forceCollide().radius(d => d.group === 'abstract' ? 22 : 14));
 
-  const link = svg.append("g")
+  const link = container.append("g")
     .attr("class", "links")
     .selectAll("line")
     .data(links)
@@ -76,7 +89,7 @@ function drawMindMap(nodes, links) {
     .attr("class", "link")
     .attr("stroke-width", 1.5);
 
-  const node = svg.append("g")
+  const node = container.append("g")
     .attr("class", "nodes")
     .selectAll("g")
     .data(nodes)
@@ -139,6 +152,7 @@ function drawMindMap(nodes, links) {
     d.fy = null;
   }
 }
+
 
 // Show modal with Bootstrap
 function showModal(abstract, keywords) {
