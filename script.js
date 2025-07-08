@@ -63,12 +63,38 @@ function drawMindMap(nodes, links) {
 
   // Add zoom behavior
   const zoom = d3.zoom()
-    .scaleExtent([0.3, 3]) // Set min and max zoom scale
+    .scaleExtent([0.3, 3]) // min and max zoom
     .on("zoom", (event) => {
       container.attr("transform", event.transform);
     });
 
-  svg.call(zoom); // Enable zoom & pan on the SVG
+  svg.call(zoom);
+
+  // Track the current transform
+  let currentTransform = d3.zoomIdentity;
+  zoom.on("zoom", (event) => {
+    currentTransform = event.transform;
+    container.attr("transform", currentTransform);
+  });
+
+  // Button actions
+  document.getElementById("zoom-in").addEventListener("click", () => {
+    smoothZoom(1.2);
+  });
+
+  document.getElementById("zoom-out").addEventListener("click", () => {
+    smoothZoom(0.8);
+  });
+
+  document.getElementById("reset").addEventListener("click", () => {
+    svg.transition().duration(500).call(zoom.transform, d3.zoomIdentity);
+  });
+
+  // Smooth zoom helper
+  function smoothZoom(scaleFactor) {
+    const newTransform = currentTransform.scale(scaleFactor);
+    svg.transition().duration(500).call(zoom.transform, newTransform);
+  }
 
   // Tooltip
   const tooltip = d3.select("body").append("div").attr("class", "tooltip");
